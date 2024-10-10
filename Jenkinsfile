@@ -34,8 +34,13 @@ pipeline{
             } 
         }
         stage('sonarQube analysis'){
-            nodejs(nodeJSInstallation: 'nodejs')
-            {sh "npm install"}
+           steps{
+                nodejs(nodeJSInstallationName: 'nodejs')
+                {
+                    sh "npm install"
+                }
+           }
+            
             
         }
         stage('Deploying App to Kubernetes') {
