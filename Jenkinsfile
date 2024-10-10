@@ -38,7 +38,7 @@ pipeline{
             steps {
                 script {
                     nodejs(nodeJSInstallationName: nodeJSInstallation) {
-                        sh 'npm install'
+                        bat 'sh npm install'
                         
                     }
                 }
