@@ -9,13 +9,13 @@ pipeline{
     stages{
         stage("Checkout Source"){
             steps{
-                git 'https://github.com/shazforiot/nodeapp_test.git'
+               git branch: 'main', credentialsId: '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', url: 'https://github.com/YessmineMallek/JenkinsKubernetes.git'
             }
         }
         stage('Build image'){
             steps{
                 script{
-                    dockerImage=docker.Build dockerimagename
+                    dockerImage = docker.build(dockerimagename)
                 }
             }
         }
