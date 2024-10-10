@@ -2,6 +2,7 @@ pipeline{
     environment{
         dockerimagename="yessminemallek/nodeapp"
         dockerImage=""
+        nodeJSInstallation = 'nodejs'
     }
     
     agent any
@@ -33,15 +34,15 @@ pipeline{
                 }
             } 
         }
-        stage('sonarQube analysis'){
-           steps{
-                nodejs(nodeJSInstallationName: 'nodejs')
-                {
-                    sh "npm install"
+       stage('SonarQube Analysis') {
+            steps {
+                script {
+                    nodejs(nodeJSInstallationName: nodeJSInstallation) {
+                        sh 'npm install'
+                        
+                    }
                 }
-           }
-            
-            
+            }
         }
         stage('Deploying App to Kubernetes') {
             steps {
