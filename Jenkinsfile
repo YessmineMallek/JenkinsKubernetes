@@ -18,11 +18,7 @@ pipeline{
                 script {bat  'npm install'}
             }
         }
-        stage("build script"){
-            steps{
-                script {bat  'npm run build '}
-            }
-        }
+       
         stage('Build image'){
             steps{
                 script{
