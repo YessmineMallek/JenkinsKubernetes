@@ -25,6 +25,12 @@ pipeline{
                         bat "echo 'Pulling SonarQube Docker image...'"
                         bat 'docker pull sonarqube:latest'
                         bat 'docker run -d --name sonarqube -p 9000:9000 sonarqube:latest'
+                        bat "echo 'Waiting for SonarQube to be ready...'"
+                        // Wait for SonarQube to be fully initialized (may take a minute)
+                        retry(5) {
+                            sleep(30) // Wait for 30 seconds between retries
+                            bat 'curl -s -f http://localhost:9000/api/system/health || exit 1'
+                        }
                 }
         }
        }
