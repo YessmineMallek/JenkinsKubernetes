@@ -20,7 +20,7 @@ pipeline{
         }
         stage("build script"){
             steps{
-                script {bat  'ng build '}
+                script {bat  'npm run build '}
             }
         }
         stage('Build image'){
