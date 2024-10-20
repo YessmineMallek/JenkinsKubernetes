@@ -24,7 +24,7 @@ pipeline{
                 script {
                         bat "echo 'Pulling SonarQube Docker image...'"
                         bat 'docker pull sonarqube:latest'
-                        bat ''' docker run -d --name sonarqube -p 9000:9000 sonarqube:latest '''
+                        bat 'docker run -d --name sonarqube -p 9000:9000 sonarqube:latest'
                 }
         }
        }
