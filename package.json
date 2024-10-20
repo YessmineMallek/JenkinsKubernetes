@@ -14,7 +14,9 @@
   "scripts": {
     "start": "node index.js",
     "test": "./node_modules/.bin/mocha ./test/test.js",
-    "sonar": "sonar-scanner"
+    "sonar": "sonar-scanner",
+    "build": "react-scripts build"
+
 
   }
 }
