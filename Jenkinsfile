@@ -1,10 +1,11 @@
 pipeline{
+    agent any
+    tools {nodejs "NODEJS14" }
     environment{
         dockerimagename="yessminemallek/nodeapp"
         dockerImage=""
     }
-    tools {nodejs "NODEJS" }
-    agent any
+   
     
     stages{
         stage("Checkout Source"){
@@ -29,7 +30,7 @@ pipeline{
                 }
             }
         }  
-        stage('Publish Image'){
+        stage('Publish Image to docker hub'){
             environment{
                 registryCredential='dockerhublogin'
             }
