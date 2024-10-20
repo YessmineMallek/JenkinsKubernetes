@@ -12,15 +12,23 @@ pipeline{
                git branch: 'main', credentialsId: 'github', url: 'https://github.com/YessmineMallek/JenkinsKubernetes.git'
             }
         }
+        stage("Install dependencies"){
+            steps{
+                sh "npm install"
+            }
+        }
+        stage("build script"){
+            steps{
+                sh "npm run build"
+            }
+        }
         stage('Build image'){
             steps{
                 script{
                     dockerImage = docker.build(dockerimagename)
                 }
             }
-        }
-        
-        
+        }  
         stage('Publish Image'){
             environment{
                 registryCredential='dockerhublogin'
@@ -43,8 +51,7 @@ pipeline{
                         }
                     }
                 }
-        }
-        
+        }      
         stage('Deploying App to Kubernetes') {
             steps {
                 script {
