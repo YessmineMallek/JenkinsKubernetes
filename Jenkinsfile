@@ -18,7 +18,26 @@ pipeline{
                 script {bat  'npm install'}
             }
         }
-       
+       stage("Pull & run sonarQube Docker Image")
+       {
+            steps{
+                script {
+                        bat "echo 'Pulling SonarQube Docker image...'"
+                        bat 'docker pull sonarqube:latest'
+                        bat ''' docker run -d --name sonarqube -p 9000:9000 sonarqube:latest '''
+                }
+        }
+       }
+       stage('SonarQube Analysis') {
+            steps {
+                script {
+                        withSonarQubeEnv('sonar'){
+                           bat 'sh npm install sonar-scanner'
+                           bat 'sh npm run sonar'
+                        }
+                    }
+                }
+        }      
         stage('Build image'){
             steps{
                 script{
@@ -38,16 +57,7 @@ pipeline{
                 }
             } 
         }
-       stage('SonarQube Analysis') {
-            steps {
-                script {
-                        withSonarQubeEnv('sonar'){
-                           bat 'sh npm install sonar-scanner'
-                           bat 'sh npm run sonar'
-                        }
-                    }
-                }
-        }      
+       
         stage('Deploying App to Kubernetes') {
             steps {
                 script {
