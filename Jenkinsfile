@@ -3,7 +3,7 @@ pipeline{
         dockerimagename="yessminemallek/nodeapp"
         dockerImage=""
     }
-    
+    tools {nodejs "NODEJS" }
     agent any
     
     stages{
@@ -14,12 +14,12 @@ pipeline{
         }
         stage("Install dependencies"){
             steps{
-                sh "npm install"
+                script {bat  'npm install'}
             }
         }
         stage("build script"){
             steps{
-                sh "npm run build"
+                script {bat  'ng build '}
             }
         }
         stage('Build image'){
