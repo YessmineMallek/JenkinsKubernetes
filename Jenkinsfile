@@ -63,7 +63,7 @@ pipeline{
                     echo always-auth=true >> .npmrc
                     """
                     bat 'type .npmrc'
-                    bat "npm publish --registry=${NEXUS_URL}/repository/${REPO_NAME}/"
+                    bat "npm publish --registry=http://${NEXUS_URL}/repository/${REPO_NAME}/"
                     bat 'del .npmrc'
                 }
             }
