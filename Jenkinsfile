@@ -47,9 +47,9 @@ pipeline{
             steps {
                 script {
                         withSonarQubeEnv('sonar'){
-                           bat "npm run sonar --version"
-                           bat 'npm install sonar-scanner'
-                           bat 'npm run sonar'
+                           bat "sh npm run sonar --version"
+                           bat 'sh npm install sonar-scanner'
+                           bat 'sh npm run sonar'
                         }
                     }
                 }
