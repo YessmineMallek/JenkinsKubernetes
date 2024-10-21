@@ -56,10 +56,15 @@ pipeline{
         stage('Publish to Nexus') {
          steps {
                 withCredentials([usernamePassword(credentialsId: NEXUS_CREDENTIALS_ID, passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'read_write_user')]) {
-                    bat 'npm pack'  // This will create a .tgz file of your package
-                    def artifactFile = "${ARTIFACT_NAME}-${VERSION}.tgz" // Dynamically create artifact name
-                    // Publish to Nexus using curl
-                    bat "curl -v -u %read_write_user%:%NEXUS_PASSWORD% --upload-file %WORKSPACE%\\${artifactFile} ${NEXUS_URL}/repository/${REPO_NAME}/${artifactFile}"
+                    // Set up npm to use Nexus
+                    bat """
+                    echo //localhost:8081/:_authToken=${NEXUS_PASSWORD} >> .npmrc
+                    echo @your-scope:registry=${NEXUS_URL}/repository/${REPO_NAME}/ >> .npmrc
+                    echo always-auth=true >> .npmrc
+                    """
+
+                    // Publish to Nexus
+                    bat 'npm publish --registry=${NEXUS_URL}/repository/${REPO_NAME}/'
                 }
             }
         }
