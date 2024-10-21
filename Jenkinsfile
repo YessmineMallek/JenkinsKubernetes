@@ -31,9 +31,7 @@ pipeline{
                     }
                 }
         }  
-        stage('Build from nexus') {
-            
-        }    
+         
         stage('Build image'){
             steps{
                 script{
