@@ -4,6 +4,12 @@ pipeline{
     environment{
         dockerimagename="yessminemallek/nodeapp"
         dockerImage=""
+        NODE_HOME = tool name: 'nodejs', type: 'NodeJSInstallation' // Configure Node.js installation in Jenkins
+        NEXUS_URL = 'http://localhost:8081/' 
+        NEXUS_CREDENTIALS_ID = 'nexusId' 
+        REPO_NAME = 'npm-group-repo' // Update with your Nexus repository name
+        ARTIFACT_NAME = 'your-app-name' // Update with your application name
+        VERSION = '1.0.${BUILD_NUMBER}' // Versioning scheme
     }
    
     
@@ -13,15 +19,13 @@ pipeline{
                 git branch: 'main', credentialsId: 'github', url: 'https://github.com/YessmineMallek/JenkinsKubernetes.git'
             }
         }
-        stage("Install dependencies"){
-           steps {
-                  script {
-                        withCredentials([file(credentialsId: 'nexusId', variable: 'nexusFile')]) {
-                            bat "echo Nexus config file path: ${nexusFile}"
-                            bat " npm install --userconfig %nexusFile% --registry http://localhost:8081/repository/npm-group-repo "
-                        }
-                    }  
-                }
+        
+        
+        stage("Install dependencies") {
+            steps {
+                script {env.PATH = "${NODE_HOME}/bin:${env.PATH}"}
+                bat 'npm install'
+            }
         }
        
        stage('SonarQube Analysis') {
@@ -33,8 +37,28 @@ pipeline{
                         }
                     }
                 }
-        }  
+        } 
          
+        stage('Run Tests') {
+            steps {
+                // Run tests using npm
+                sh 'npm test'
+            }
+        }
+        
+        stage('Publish to Nexus') {
+            steps {
+                script {
+                    def packageJson = readJSON file: 'package.json'
+                    packageJson.version = VERSION
+                    writeJSON file: 'package.json', json: packageJson
+                }
+                withCredentials([usernamePassword(credentialsId: NEXUS_CREDENTIALS_ID, passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'read_write_user')]) {
+                    bat "npm publish --registry=${NEXUS_URL}/repository/${REPO_NAME}/ --username=${NEXUS_USER} --password=${NEXUS_PASS}"
+                }
+            }
+        }
+        
         stage('Build image'){
             steps{
                 script{
