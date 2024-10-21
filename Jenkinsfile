@@ -28,7 +28,14 @@ pipeline{
                         }
                     }
                 }
-        }      
+        }  
+        stage('Build from nexus') {
+            steps {
+                    withCredentials([file(credentialsId: 'nexusCode', variable: 'nexusnpm')]) {
+                        bat "npm install --userconfig $nexusnpm --registry http://192.168.1.66:8081/repository/group-node-app --loglevel verbose"
+                    }
+                }
+        }    
         stage('Build image'){
             steps{
                 script{
