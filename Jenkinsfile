@@ -15,8 +15,8 @@ pipeline{
         }
         stage("Install dependencies"){
            steps {
-                    withCredentials([file(credentialsId: 'nexusCode', variable: 'nexusnpm')]) {
-                        bat "npm install --userconfig $nexusnpm --registry http://192.168.1.66:8081/repository/group-node-app --loglevel verbose"
+                    withCredentials([file(credentialsId: 'nexusId', variable: 'nexusFile')]) {
+                        bat "npm install --userconfig $nexusFile --registry http://localhost:8081/repository/npm-group-repo --loglevel verbose"
                     }
                 }
         }
