@@ -42,7 +42,7 @@ pipeline{
         stage('Run Tests') {
             steps {
                 // Run tests using npm
-                sh 'npm test'
+                bat 'npm test'
             }
         }
         
