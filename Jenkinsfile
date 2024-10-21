@@ -18,7 +18,25 @@ pipeline{
                 git branch: 'main', credentialsId: 'github', url: 'https://github.com/YessmineMallek/JenkinsKubernetes.git'
             }
         }
+        stage('Clean Workspace') {
+            steps {
+                script {
+                    deleteDir() 
+                }
+            }
+        } 
         
+        
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                        withSonarQubeEnv('sonar'){
+                           bat 'sh npm install sonar-scanner'
+                           bat 'sh npm run sonar'
+                        }
+                    }
+                }
+        } 
         
         stage("Install Dependencies") {
             steps {
@@ -31,20 +49,11 @@ pipeline{
             }
         }
        
-       stage('SonarQube Analysis') {
-            steps {
-                script {
-                        withSonarQubeEnv('sonar'){
-                           bat 'sh npm install sonar-scanner'
-                           bat 'sh npm run sonar'
-                        }
-                    }
-                }
-        } 
+       
          
         stage('Run Tests') {
             steps {
-                script{bat 'npm test'}
+                script{bat 'npm run test'}
             }
         }
         
