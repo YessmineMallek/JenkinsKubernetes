@@ -17,6 +17,7 @@ pipeline{
            steps {
                   script {
                         withCredentials([file(credentialsId: 'nexusId', variable: 'nexusFile')]) {
+                            bat "echo Nexus config file path: ${nexusFile}"
                             bat " npm install --userconfig %nexusFile% --registry http://localhost:8081/repository/npm-group-repo "
                         }
                     }  
