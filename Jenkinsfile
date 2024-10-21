@@ -22,7 +22,7 @@ pipeline{
         
         stage("Install dependencies") {
             steps {
-               script{ bat 'npm install --registry http://localhost:8081/repository/npm-group-repo/'}
+               script{ bat 'npm install --registry http://localhost:8081/repository/npm-proxy-repo/ debug'}
             }
         }
        
