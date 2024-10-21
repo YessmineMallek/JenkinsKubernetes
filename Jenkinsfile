@@ -1,5 +1,6 @@
 pipeline{
     agent any
+    tools {nodejs "NODEJS14" }
     environment{
         dockerimagename="yessminemallek/nodeapp"
         dockerImage=""
