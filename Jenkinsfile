@@ -20,13 +20,12 @@ pipeline{
         }
         
         
-        stage("Install dependencies") {
+        stage("Install Dependencies") {
             steps {
-               script{ 
-                withCredentials([usernamePassword(credentialsId: NEXUS_CREDENTIALS_ID, passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'read_write_user')]) {
-                    bat "npm install --registry http://localhost:8081/repository/npm-proxy-repo/ debug --username=${NEXUS_USER} --password=${NEXUS_PASS}"
-                }
-                
+                script {
+                    withCredentials([usernamePassword(credentialsId: NEXUS_CREDENTIALS_ID, passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'NEXUS_USER')]) {
+                        bat "npm install --registry ${NEXUS_URL}/repository/npm-proxy-repo/ --username=${NEXUS_USER} --password=${NEXUS_PASSWORD}"
+                    }
                 }
             }
         }
