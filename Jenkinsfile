@@ -17,7 +17,7 @@ pipeline{
            steps {
                   script{
                     withCredentials([file(credentialsId: 'nexusId', variable: 'nexusFile')]) {
-                        bat "npm install --userconfig $nexusFile --registry http://localhost:8081/repository/npm-group-repo --loglevel verbose"
+                        bat "sh npm install --userconfig $nexusFile --registry http://localhost:8081/repository/npm-group-repo --loglevel verbose"
                     }
                   }    
                 }
