@@ -13,18 +13,22 @@ pipeline{
    
     
     stages{
-        stage("Checkout Source"){
-            steps{
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/YessmineMallek/JenkinsKubernetes.git'
-            }
-        }
-        stage('Clean Workspace') {
+       
+          stage('Clean Workspace') {
             steps {
                 script {
                     deleteDir() 
                 }
             }
         } 
+        
+        
+        stage("Checkout Source"){
+            steps{
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/YessmineMallek/JenkinsKubernetes.git'
+            }
+        }
+     
         
         
         stage('SonarQube Analysis') {
