@@ -32,9 +32,9 @@ pipeline{
         stage("Install Dependencies") {
             steps {
                   withCredentials([file(credentialsId: 'nexussFileTokens', variable: 'mynpmrc')]) {
-                    bat 'cp .npmrc ~/.npmrc'
+                    bat 'sh cp .npmrc ~/.npmrc'
                     bat 'npm install'
-                    bat 'rm ~/.npmrc'
+                    bat 'sh rm ~/.npmrc'
                 }
                 
             }
