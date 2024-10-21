@@ -32,7 +32,7 @@ pipeline{
         stage("Install Dependencies") {
             steps {
                   withCredentials([file(credentialsId: 'nexussFileTokens', variable: 'mynpmrc')]) {
-                    bat 'cp $mynpmrc ~/.npmrc'
+                    bat 'cp $.npmrc ~/.npmrc'
                     bat 'npm install'
                     bat 'rm ~/.npmrc'
                 }
@@ -40,9 +40,6 @@ pipeline{
             }
         }
          
-       
-        
-        
         stage('SonarQube Analysis') {
             steps {
                 script {
