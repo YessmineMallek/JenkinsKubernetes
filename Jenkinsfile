@@ -23,6 +23,7 @@ pipeline{
         stage("Install Dependencies") {
             steps {
                 script {
+                   bat "npm cache clean --force"
                    bat "npm config set registry https://registry.npmjs.org/"
                    bat "npm install"
                 }
