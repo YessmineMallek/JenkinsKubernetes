@@ -42,7 +42,9 @@ pipeline{
          
         stage('Run Tests') {
             steps {
-                script{bat 'npm run test'}
+                script{
+                    bat 'PORT=3002 npm run test'
+                }
             }
         }
         
