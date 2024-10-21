@@ -4,7 +4,6 @@ pipeline{
     environment{
         dockerimagename="yessminemallek/nodeapp"
         dockerImage=""
-        NODE_HOME = tool name: 'nodejs', type: 'NodeJSInstallation' // Configure Node.js installation in Jenkins
         NEXUS_URL = 'http://localhost:8081/' 
         NEXUS_CREDENTIALS_ID = 'nexusId' 
         REPO_NAME = 'npm-group-repo' // Update with your Nexus repository name
@@ -23,7 +22,6 @@ pipeline{
         
         stage("Install dependencies") {
             steps {
-                script {env.PATH = "${NODE_HOME}/bin:${env.PATH}"}
                 bat 'npm install'
             }
         }
@@ -41,7 +39,6 @@ pipeline{
          
         stage('Run Tests') {
             steps {
-                // Run tests using npm
                 bat 'npm test'
             }
         }
