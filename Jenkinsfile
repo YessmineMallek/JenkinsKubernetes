@@ -64,7 +64,7 @@ pipeline{
                     writeJSON file: 'package.json', json: packageJson
                 }
                 withCredentials([usernamePassword(credentialsId: NEXUS_CREDENTIALS_ID, passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'read_write_user')]) {
-                    bat "npm publish --registry=${NEXUS_URL}/repository/${REPO_NAME}/ --username=${NEXUS_USER} --password=${NEXUS_PASS}"
+                    bat "npm publish --registry=${NEXUS_URL}/repository/${REPO_NAME}/ --username=${NEXUS_USER} --password=${NEXUS_PASSWORD}"
                 }
             }
         }
