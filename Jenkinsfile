@@ -1,6 +1,5 @@
 pipeline{
     agent any
-    tools {nodejs "NODEJS14" }
     environment{
         dockerimagename="yessminemallek/nodeapp"
         dockerImage=""
@@ -29,7 +28,16 @@ pipeline{
             }
         }
      
-        
+        stage("Install Dependencies") {
+            steps {
+                script {
+                   bat "npm cache clean --force"
+                   bat "rm -f package-lock.json"
+                   bat "npm config set registry https://registry.npmjs.org/"
+                   bat "npm install"
+                }
+            }
+        }
         
         stage('SonarQube Analysis') {
             steps {
@@ -41,19 +49,6 @@ pipeline{
                     }
                 }
         } 
-        
-        stage("Install Dependencies") {
-            steps {
-                script {
-                   bat "npm cache clean --force"
-                   bat "rm -f package-lock.json"
-                   bat "npm config set registry https://registry.npmjs.org/"
-                   bat "npm install"
-                }
-            }
-        }
-       
-       
          
         stage('Run Tests') {
             steps {
