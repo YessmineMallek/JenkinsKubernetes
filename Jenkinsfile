@@ -65,7 +65,7 @@ pipeline{
                     """
 
                     // Publish to Nexus
-                    bat 'npm publish --registry=${NEXUS_URL}/repository/${REPO_NAME}/'
+                    bat 'npm publish --registry=http://${NEXUS_URL}/repository/${REPO_NAME}/'
                 }
             }
         }
