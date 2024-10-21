@@ -24,6 +24,7 @@ pipeline{
             steps {
                 script {
                    bat "npm cache clean --force"
+                   bat "rm -f package-lock.json"
                    bat "npm config set registry https://registry.npmjs.org/"
                    bat "npm install"
                 }
