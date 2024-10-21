@@ -57,15 +57,14 @@ pipeline{
         stage('Publish to Nexus') {
          steps {
                 withCredentials([usernamePassword(credentialsId: NEXUS_CREDENTIALS_ID, passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'read_write_user')]) {
-                    // Set up npm to use Nexus
                     bat """
-                    echo //localhost:8081/:_authToken=${NEXUS_PASSWORD} >> .npmrc
+                    echo //localhost:8081/:_authToken=%NEXUS_PASSWORD% >> .npmrc
                     echo @your-scope:registry=${NEXUS_URL}/repository/${REPO_NAME}/ >> .npmrc
                     echo always-auth=true >> .npmrc
                     """
-
-                    // Publish to Nexus
-                    bat 'npm publish --registry=http://${NEXUS_URL}/repository/${REPO_NAME}/'
+                    bat 'type .npmrc'
+                    bat "npm publish --registry=${NEXUS_URL}/repository/${REPO_NAME}/"
+                    bat 'del .npmrc'
                 }
             }
         }
