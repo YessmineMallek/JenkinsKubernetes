@@ -39,23 +39,26 @@ pipeline{
                 }
             }
         }
-        
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                        withSonarQubeEnv('sonar'){
-                           bat 'npm install sonar-scanner'
-                           bat 'npm run sonar'
-                        }
-                    }
-                }
-        } 
          
         stage('Run Tests') {
             steps {
                 script{bat 'npm run test'}
             }
         }
+        
+        
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                        withSonarQubeEnv('sonar'){
+                           bat "npm run sonar --version"
+                           bat 'npm install sonar-scanner'
+                           bat 'npm run sonar'
+                        }
+                    }
+                }
+        } 
+        
         
         stage('Publish to Nexus') {
             steps {
