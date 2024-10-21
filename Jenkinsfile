@@ -31,12 +31,12 @@ pipeline{
      
         stage("Install Dependencies") {
             steps {
-                script {
-                   bat "npm cache clean --force"
-                   bat "rm -f package-lock.json"
-                   bat "npm config set registry https://registry.npmjs.org/"
-                   bat "npm install"
+                  withCredentials([file(credentialsId: 'nexussFileTokens', variable: 'mynpmrc')]) {
+                    bat 'cp $mynpmrc ~/.npmrc'
+                    bat 'npm install'
+                    bat 'rm ~/.npmrc'
                 }
+                
             }
         }
          
