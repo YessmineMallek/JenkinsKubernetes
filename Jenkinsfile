@@ -22,7 +22,7 @@ pipeline{
         
         stage("Install dependencies") {
             steps {
-                bat 'npm install'
+               script{ bat 'npm install'}
             }
         }
        
@@ -39,7 +39,7 @@ pipeline{
          
         stage('Run Tests') {
             steps {
-                bat 'npm test'
+                script{bat 'npm test'}
             }
         }
         
