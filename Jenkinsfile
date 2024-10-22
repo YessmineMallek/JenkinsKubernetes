@@ -9,7 +9,7 @@ pipeline{
         NEXUS_CREDENTIALS_ID = 'nexusId' 
         REPO_NAME = 'npm-hosted-repo-jenkins'
         ARTIFACT_NAME = 'your-app-name' 
-        VERSION = '1.0.${BUILD_NUMBER}-SNAPSHOT' 
+        VERSION = '1.0.${BUILD_NUMBER}' 
     }
    
     
