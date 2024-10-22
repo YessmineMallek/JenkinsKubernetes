@@ -9,7 +9,8 @@ pipeline{
         NEXUS_CREDENTIALS_ID = 'nexus-cred' 
         REPO_NAME = 'npm-hosted-repo-jenkins'
         ARTIFACT_NAME = 'your-app-name' 
-        VERSION = '1.0.${BUILD_NUMBER}' 
+        VERSION = '1.0.${BUILD_NUMBER}'
+        TEST_PORT=3002 
     }
    
     
@@ -56,7 +57,7 @@ pipeline{
         
         stage("Run Test") {
             steps {
-                script{bat "npm run test"}
+                script{bat 'PORT=$TEST_PORT npm run test'}
                 }
         }
         stage('Publish to Nexus') {
