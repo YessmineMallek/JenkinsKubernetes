@@ -54,7 +54,11 @@ pipeline{
             }
         }
         
-        
+        stage("Run Test") {
+            steps {
+                script{bat "npm run test"}
+                }
+        }
         stage('Publish to Nexus') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexusCredentials', 
