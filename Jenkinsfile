@@ -6,9 +6,9 @@ pipeline{
         dockerImage=""
         NEXUS_URL = 'http://localhost:8081/' 
         NEXUS_CREDENTIALS_ID = 'nexusId' 
-        GROUP_NAME = 'npm-group-repo' // Update with your Nexus repository name
-        ARTIFACT_NAME = 'your-app-name' // Update with your application name
-        VERSION = '1.0.${BUILD_NUMBER}' // Versioning scheme
+        GROUP_NAME = 'npm-group-repo' 
+        ARTIFACT_NAME = 'your-app-name' 
+        VERSION = '1.0.${BUILD_NUMBER}' 
     }
    
     
@@ -57,7 +57,7 @@ pipeline{
         stage('Publish to Nexus') {
          steps {
                 
-                withCredentials([usernamePassword(credentialsId: NEXUS_CREDENTIALS_ID, passwordVariable: NEXUS_PASSWORD, usernameVariable: 'read_write_user')]) {
+                withCredentials([usernamePassword(credentialsId: NEXUS_CREDENTIALS_ID)]) {
                    nexusArtifactUploader(
                         nexusVersion: 'nexus3',
                         protocol: 'http',
