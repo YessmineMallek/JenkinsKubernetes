@@ -56,16 +56,14 @@ pipeline{
         
         stage('Publish to Nexus') {
          steps {
-                
-                withCredentials([usernamePassword(credentialsId: NEXUS_CREDENTIALS_ID)]) {
-                   nexusArtifactUploader(
+                nexusArtifactUploader(
                         nexusVersion: 'nexus3',
                         protocol: 'http',
                         nexusUrl: NEXUS_URL,
                         groupId: GROUP_NAME,
                         version: tagG,
                         repository: 'myRepo',
-                        credentialsId: NEXUS_CREDENTIALS_ID,
+                        credentialsId: nexussFileTokens,
                         artifacts: [
                             [artifactId: 'myArchive',
                             type:'tgz',
@@ -75,7 +73,7 @@ pipeline{
                     )
                 }
             }
-        }
+        
         
         stage('Build image'){
             steps{
