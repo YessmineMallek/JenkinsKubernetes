@@ -4,7 +4,7 @@ pipeline{
     environment{
         dockerimagename="yessminemallek/nodeapp"
         dockerImage=""
-        NEXUS_URL = 'http://localhost:8081/' 
+        NEXUS_URL = 'http://localhost:8081' 
         NEXUS_CREDENTIALS_ID = 'nexusId' 
         GROUP_NAME = 'npm-group-repo' 
         ARTIFACT_NAME = 'your-app-name' 
@@ -62,13 +62,14 @@ pipeline{
                         nexusUrl: NEXUS_URL,
                         groupId: GROUP_NAME,
                         version: VERSION,
-                        repository: 'myRepo',
                         credentialsId: NEXUS_CREDENTIALS_ID,
                         artifacts: [
-                            [artifactId: 'myArchive',
-                            type:'tgz',
-                            classifier: '',
-                            file: "node-app-0.0.1.tgz"]
+                            [
+                                artifactId: 'myArchive',
+                                type:'tgz',
+                                classifier: '',
+                                file: "node-app-0.0.1.tgz"
+                            ]
                         ]
                     )
                 }
