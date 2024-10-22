@@ -61,9 +61,11 @@ pipeline{
                         withCredentials([usernamePassword(credentialsId: 'nexusCredentials', 
                                                     usernameVariable: 'NEXUS_USERNAME', 
                                                     passwordVariable: 'NEXUS_PASSWORD')]) {
-                        echo "//localhost:8081/repository/npm-hosted-repo-jenkins/:username=$NEXUS_USERNAME > .npmrc"
-                        echo "//localhost:8081/repository/npm-hosted-repo-jenkins/:_password=$(echo -n $NEXUS_PASSWORD | base64) >> .npmrc"
-                        echo "//localhost:8081/repository/npm-hosted-repo-jenkins/:email=mallek.yessmin@gmail.com >> .npmrc"
+                        bat """
+                            sh echo //localhost:8081/repository/npm-hosted-repo-jenkins/:username=$NEXUS_USERNAME > .npmrc
+                            sh echo //localhost:8081/repository/npm-hosted-repo-jenkins/:_password=$(echo -n $NEXUS_PASSWORD | base64) >> .npmrc
+                            sh echo //localhost:8081/repository/npm-hosted-repo-jenkins/:email=mallek.yessmin@gmail.com >> .npmrc
+                        """
                         bat 'npm publish --registry=http://localhost:8081/repository/npm-hosted-repo-jenkins'
                         bat 'del .npmrc'
                       }
