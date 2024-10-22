@@ -7,7 +7,6 @@ pipeline{
         //Nexus    
         NEXUS_URL = 'localhost:8081' 
         NEXUS_CREDENTIALS_ID = 'nexusId' 
-        GROUP_NAME = 'npm-group-repo' 
         REPO_NAME = 'npm-hosted-repo'
         ARTIFACT_NAME = 'your-app-name' 
         VERSION = '1.0.${BUILD_NUMBER}' 
@@ -63,7 +62,7 @@ pipeline{
                             protocol: 'http',
                             nexusUrl: NEXUS_URL,
                             version: VERSION,
-                            groupId: GROUP_NAME,
+                            groupId: "Dev",
                             repository: REPO_NAME,
                             credentialsId: NEXUS_CREDENTIALS_ID,
                             artifacts: [
