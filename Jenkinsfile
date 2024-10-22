@@ -60,6 +60,8 @@ pipeline{
             steps {
                     withCredentials([file(credentialsId: 'nexussFileTokens', variable: 'mynpmrc')]) {
                         bat 'copy .npmrc %USERPROFILE%\\.npmrc'
+                        bat 'npm config get registry'
+                        bat "cat %USERPROFILE%\\.npmrc"
                         bat 'npm adduser --registry http://localhost:8081/repository/npm-hosted-repo-jenkins --always-auth'
                         bat 'npm publish --registry http://localhost:8081/repository/npm-hosted-repo-jenkins'
                         bat 'del %USERPROFILE%\\.npmrc'
