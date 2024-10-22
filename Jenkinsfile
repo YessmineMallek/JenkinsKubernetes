@@ -62,7 +62,7 @@ pipeline{
                                                  passwordVariable: 'NEXUS_PASSWORD')]) {
                     bat "npm config set registry=http://localhost:8081/repository/npm-group-repo/"
                     bat """
-                        echo //localhost:8081/repository/npm-group-repo/:username=${NEXUS_USERNAME} > .npmrc
+                        echo //localhost:8081/repository/npm-group-repo/:username=${NEXUS_USERNAME} >> .npmrc
                         echo //localhost:8081/repository/npm-group-repo/:_password=${NEXUS_PASSWORD.bytes.encodeBase64().toString()} >> .npmrc
                         echo //localhost:8081/repository/npm-group-repo/:email=mallek.yessmin@gmail.com >> .npmrc
                     """
