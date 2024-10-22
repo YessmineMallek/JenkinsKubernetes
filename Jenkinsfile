@@ -6,7 +6,7 @@ pipeline{
         dockerImage=""
         NEXUS_URL = 'http://localhost:8081/' 
         NEXUS_CREDENTIALS_ID = 'nexusId' 
-        REPO_NAME = 'npm-group-repo' // Update with your Nexus repository name
+        GROUP_NAME = 'npm-group-repo' // Update with your Nexus repository name
         ARTIFACT_NAME = 'your-app-name' // Update with your application name
         VERSION = '1.0.${BUILD_NUMBER}' // Versioning scheme
     }
@@ -56,15 +56,23 @@ pipeline{
         
         stage('Publish to Nexus') {
          steps {
-                withCredentials([usernamePassword(credentialsId: NEXUS_CREDENTIALS_ID, passwordVariable: 'NEXUS_PASSWORD', usernameVariable: 'read_write_user')]) {
-                    bat """
-                    echo //localhost:8081/:_authToken=%NEXUS_PASSWORD% >> .npmrc
-                    echo @your-scope:registry=${NEXUS_URL}/repository/${REPO_NAME}/ >> .npmrc
-                    echo always-auth=true >> .npmrc
-                    """
-                    bat 'type .npmrc'
-                    bat "npm publish --registry=http://${NEXUS_URL}/repository/${REPO_NAME}/"
-                    bat 'del .npmrc'
+                
+                withCredentials([usernamePassword(credentialsId: NEXUS_CREDENTIALS_ID, passwordVariable: NEXUS_PASSWORD, usernameVariable: 'read_write_user')]) {
+                   nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: NEXUS_URL,
+                        groupId: GROUP_NAME,
+                        version: tagG,
+                        repository: 'myRepo',
+                        credentialsId: NEXUS_CREDENTIALS_ID,
+                        artifacts: [
+                            [artifactId: 'myArchive',
+                            type:'tgz',
+                            classifier: '',
+                            file: "node-app-0.0.1.tgz"]
+                        ]
+                    )
                 }
             }
         }
