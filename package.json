@@ -2,7 +2,6 @@
   "name": "node-app",
   "description": "Nodeapp for CICD test",
   "version": "0.0.1",
-  "private": true,
   "dependencies": {
     "buffer": "^6.0.3",
     "express": "^4.21.1",
