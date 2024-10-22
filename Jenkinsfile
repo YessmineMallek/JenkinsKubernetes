@@ -59,7 +59,7 @@ pipeline{
             steps {
                     withCredentials([file(credentialsId: 'nexussFileTokens', variable: 'mynpmrc')]) {
                     bat 'copy .npmrc %USERPROFILE%\\.npmrc'  
-                    bat 'npm pulish'                       
+                    bat 'npm publish'                       
                     bat 'del %USERPROFILE%\\.npmrc'          
                     }
                 }
