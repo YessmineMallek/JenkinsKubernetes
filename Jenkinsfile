@@ -35,7 +35,6 @@ pipeline{
                   withCredentials([file(credentialsId: 'nexussFileTokens', variable: 'mynpmrc')]) {
                     bat 'copy .npmrc %USERPROFILE%\\.npmrc'  
                     bat 'npm install'                       
-                    bat 'del %USERPROFILE%\\.npmrc'          
 
                 }
                 
@@ -58,17 +57,17 @@ pipeline{
         
         stage('Publish to Nexus') {
             steps {
-                        withCredentials([usernamePassword(credentialsId: 'nexusCredentials', 
-                                                    usernameVariable: 'NEXUS_USERNAME', 
-                                                    passwordVariable: 'NEXUS_PASSWORD')]) {
-                        bat """
-                            sh echo //localhost:8081/repository/npm-hosted-repo-jenkins/:username=$NEXUS_USERNAME > .npmrc
-                            sh echo //localhost:8081/repository/npm-hosted-repo-jenkins/:_password=$(sh echo -n $NEXUS_PASSWORD | base64) >> .npmrc
-                            sh echo //localhost:8081/repository/npm-hosted-repo-jenkins/:email=mallek.yessmin@gmail.com >> .npmrc
-                        """
-                        bat 'npm publish --registry=http://localhost:8081/repository/npm-hosted-repo-jenkins'
-                        bat 'del .npmrc'
-                      }
+                withCredentials([usernamePassword(credentialsId: 'nexusCredentials', 
+                                                 usernameVariable: 'NEXUS_USERNAME', 
+                                                 passwordVariable: 'NEXUS_PASSWORD')]) {
+                    bat """
+                        echo //localhost:8081/repository/npm-hosted-repo-jenkins/:username=${NEXUS_USERNAME} > .npmrc
+                        echo //localhost:8081/repository/npm-hosted-repo-jenkins/:_password=${NEXUS_PASSWORD.bytes.encodeBase64().toString()} >> .npmrc
+                        echo //localhost:8081/repository/npm-hosted-repo-jenkins/:email=youremail@example.com >> .npmrc
+                    """
+                    bat 'npm publish --registry=http://localhost:8081/repository/npm-hosted-repo-jenkins'
+                    bat 'del .npmrc'
+                }
                 }
             }
         
