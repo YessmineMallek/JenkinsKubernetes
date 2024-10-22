@@ -63,7 +63,7 @@ pipeline{
                         groupId: GROUP_NAME,
                         version: VERSION,
                         repository: 'myRepo',
-                        credentialsId: nexussFileTokens,
+                        credentialsId: NEXUS_CREDENTIALS_ID,
                         artifacts: [
                             [artifactId: 'myArchive',
                             type:'tgz',
