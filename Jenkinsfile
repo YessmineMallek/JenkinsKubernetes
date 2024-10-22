@@ -6,7 +6,7 @@ pipeline{
         dockerImage=""
         //Nexus    
         NEXUS_URL = 'localhost:8081' 
-        NEXUS_CREDENTIALS_ID = 'nexusId' 
+        NEXUS_CREDENTIALS_ID = 'nexus-cred' 
         REPO_NAME = 'npm-hosted-repo-jenkins'
         ARTIFACT_NAME = 'your-app-name' 
         VERSION = '1.0.${BUILD_NUMBER}' 
