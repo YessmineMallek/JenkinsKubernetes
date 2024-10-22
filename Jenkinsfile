@@ -61,7 +61,6 @@ pipeline{
                             nexusVersion: 'nexus3',
                             protocol: 'http',
                             nexusUrl: NEXUS_URL,
-                            groupId: GROUP_NAME,
                             version: VERSION,
                             repository: GROUP_NAME,
                             credentialsId: NEXUS_CREDENTIALS_ID,
