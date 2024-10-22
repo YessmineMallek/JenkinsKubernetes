@@ -57,23 +57,11 @@ pipeline{
         
         stage('Publish to Nexus') {
             steps {
-                    nexusArtifactUploader(
-                            nexusVersion: 'nexus3',
-                            protocol: 'http',
-                            nexusUrl: NEXUS_URL,
-                            version: VERSION,
-                            groupId: "Dev",
-                            repository: REPO_NAME,
-                            credentialsId: NEXUS_CREDENTIALS_ID,
-                            artifacts: [
-                                [
-                                    artifactId: 'myArchive',
-                                    type:'tgz',
-                                    classifier: '',
-                                    file: "node-app-0.0.1.tgz"
-                                ]
-                            ]
-                        )
+                    withCredentials([file(credentialsId: 'nexussFileTokens', variable: 'mynpmrc')]) {
+                    bat 'copy .npmrc %USERPROFILE%\\.npmrc'  
+                    bat 'npm pulish'                       
+                    bat 'del %USERPROFILE%\\.npmrc'          
+                    }
                 }
             }
         
