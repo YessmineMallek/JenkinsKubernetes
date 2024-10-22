@@ -58,14 +58,17 @@ pipeline{
         
         stage('Publish to Nexus') {
             steps {
-                    withCredentials([file(credentialsId: 'nexussFileTokens', variable: 'mynpmrc')]) {
-                        bat 'copy .npmrc %USERPROFILE%\\.npmrc'
-                        bat 'npm config get registry'
-                        bat "cat %USERPROFILE%\\.npmrc"
-                        bat 'npm adduser --registry http://localhost:8081/repository/npm-hosted-repo-jenkins --always-auth'
-                        bat 'npm publish --registry http://localhost:8081/repository/npm-hosted-repo-jenkins'
-                        bat 'del %USERPROFILE%\\.npmrc'
-                    }
+                        withCredentials([usernamePassword(credentialsId: 'nexusCredentials', 
+                                                    usernameVariable: 'NEXUS_USERNAME', 
+                                                    passwordVariable: 'NEXUS_PASSWORD')]) {
+                        bat """
+                            echo //localhost:8081/repository/npm-hosted-repo-jenkins/:username=$NEXUS_USERNAME > .npmrc
+                            echo //localhost:8081/repository/npm-hosted-repo-jenkins/:_password=$(echo -n $NEXUS_PASSWORD | base64) >> .npmrc
+                            echo //localhost:8081/repository/npm-hosted-repo-jenkins/:email=youremail@example.com >> .npmrc
+                        """
+                        bat 'npm publish --registry=http://localhost:8081/repository/npm-hosted-repo-jenkins'
+                        bat 'del .npmrc'
+                      }
                 }
             }
         
