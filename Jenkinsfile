@@ -63,7 +63,7 @@ pipeline{
                                                     passwordVariable: 'NEXUS_PASSWORD')]) {
                         bat """
                             sh echo //localhost:8081/repository/npm-hosted-repo-jenkins/:username=$NEXUS_USERNAME > .npmrc
-                            sh echo //localhost:8081/repository/npm-hosted-repo-jenkins/:_password=$(echo -n $NEXUS_PASSWORD | base64) >> .npmrc
+                            sh echo //localhost:8081/repository/npm-hosted-repo-jenkins/:_password=$(sh echo -n $NEXUS_PASSWORD | base64) >> .npmrc
                             sh echo //localhost:8081/repository/npm-hosted-repo-jenkins/:email=mallek.yessmin@gmail.com >> .npmrc
                         """
                         bat 'npm publish --registry=http://localhost:8081/repository/npm-hosted-repo-jenkins'
