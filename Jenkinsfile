@@ -61,7 +61,7 @@ pipeline{
                         protocol: 'http',
                         nexusUrl: NEXUS_URL,
                         groupId: GROUP_NAME,
-                        version: tagG,
+                        version: VERSION,
                         repository: 'myRepo',
                         credentialsId: nexussFileTokens,
                         artifacts: [
