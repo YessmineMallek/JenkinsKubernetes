@@ -4,6 +4,7 @@ pipeline{
     environment{
         dockerimagename="yessminemallek/nodeapp"
         dockerImage=""
+        
         NEXUS_URL = 'http://localhost:8081' 
         NEXUS_CREDENTIALS_ID = 'nexusId' 
         GROUP_NAME = 'npm-group-repo' 
@@ -62,6 +63,7 @@ pipeline{
                         nexusUrl: NEXUS_URL,
                         groupId: GROUP_NAME,
                         version: VERSION,
+                        repository: GROUP_NAME,
                         credentialsId: NEXUS_CREDENTIALS_ID,
                         artifacts: [
                             [
