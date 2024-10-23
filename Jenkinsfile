@@ -54,10 +54,16 @@ pipeline{
                 }
             }
         }
-        
+         stage("Build") {
+            steps {
+                    bat "npm ci" 
+                    stash includes:'node_modules/**',name:'npm-cache'                   
+                }
+        }
         stage("Run Test") {
             steps {
-                    bat "npm install"
+                    
+                    unstash 'npm-cache'
                     bat "npm run test -- --port 3002 --verbose"
                 }
         }
