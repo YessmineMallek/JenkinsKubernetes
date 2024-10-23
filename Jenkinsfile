@@ -57,7 +57,7 @@ pipeline{
         
         stage("Run Test") {
             steps {
-                bat "npm run test -- --port 3002"
+                    bat "npm run test -- --port 3002 --verbose"
                 }
         }
         stage('Publish to Nexus') {
