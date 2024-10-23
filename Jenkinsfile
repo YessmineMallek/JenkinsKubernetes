@@ -57,6 +57,7 @@ pipeline{
         
         stage("Run Test") {
             steps {
+                    bat "npm install"
                     bat "npm run test -- --port 3002 --verbose"
                 }
         }
