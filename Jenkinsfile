@@ -44,7 +44,7 @@ pipeline{
         
         stage("run test") {
             steps {
-                    bat "npm run test" 
+                    bat "npx mocha" 
                 }
         } 
         stage('SonarQube Analysis') {
