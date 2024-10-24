@@ -3,14 +3,28 @@
   "description": "Nodeapp for CICD test",
   "version": "0.0.1",
   "dependencies": {
+    "buffer": "^6.0.3",
     "express": "^4.21.1",
+    "http": "^0.0.1-security",
     "mocha": "^10.7.3",
-    "supertest": "^7.0.0"
+    "path-browserify": "^1.0.1",
+    "stream-browserify": "^3.0.0",
+    "supertest": "^7.0.0",
+    "url": "^0.11.4",
+    "util": "^0.12.5"
   },
   "scripts": {
     "start": "node index.js",
     "test": "mocha ./test/test.js",
     "sonar": "sonar-scanner",
-    "check-vulns": "dependency-check package.json --format HTML --out dependency-check-report.html "
+    "check-vulns": "dependency-check package.json --format HTML --out dependency-check-report.html ",
+    "build": "webpack --config webpack.config.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.9",
+    "@babel/preset-env": "^7.25.9",
+    "babel-loader": "^9.2.1",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
   }
 }
