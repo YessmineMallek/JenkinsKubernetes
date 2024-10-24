@@ -3,15 +3,14 @@
   "description": "Nodeapp for CICD test",
   "version": "0.0.1",
   "dependencies": {
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "mocha": "^10.7.3",
+    "supertest": "^7.0.0"
   },
- 
   "scripts": {
     "start": "node index.js",
-    "test": "mocha -w ./test/test.js",
+    "test": "mocha ./test/test.js",
     "sonar": "sonar-scanner",
     "check-vulns": "dependency-check package.json --format HTML --out dependency-check-report.html "
-
-    
   }
 }

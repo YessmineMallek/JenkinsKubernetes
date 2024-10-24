@@ -41,9 +41,10 @@ pipeline{
                 
             }
         }
-         stage("Build") {
+        
+        stage("run test") {
             steps {
-                    bat "npm ci" 
+                    bat "npm run test" 
                 }
         } 
         stage('SonarQube Analysis') {
