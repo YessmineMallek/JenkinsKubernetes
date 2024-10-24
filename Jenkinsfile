@@ -44,14 +44,12 @@ pipeline{
          stage("Build") {
             steps {
                     bat "npm ci" 
-                    stash includes:'node_modules/**',name:'npm-cache'                   
                 }
         } 
         stage('SonarQube Analysis') {
             steps {
                 script {
                     withSonarQubeEnv('sonar') {
-                        echo "sonaaar"
                         bat "npm run sonar --version"
                         bat "npm install sonar-scanner"
                         bat "npm run sonar"
@@ -63,8 +61,6 @@ pipeline{
         stage("Run Test") {
             steps {
                 timeout(time: 10, unit: 'MINUTES') {
-
-                    unstash 'npm-cache'
                     bat "npm run test -- --port 3002 --watch"
                     }
                 }
