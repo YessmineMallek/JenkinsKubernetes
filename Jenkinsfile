@@ -41,7 +41,12 @@ pipeline{
                 
             }
         }
-         
+         stage("Build") {
+            steps {
+                    bat "npm ci" 
+                    stash includes:'node_modules/**',name:'npm-cache'                   
+                }
+        } 
         stage('SonarQube Analysis') {
             steps {
                 script {
@@ -54,17 +59,14 @@ pipeline{
                 }
             }
         }
-         stage("Build") {
-            steps {
-                    bat "npm ci" 
-                    stash includes:'node_modules/**',name:'npm-cache'                   
-                }
-        }
+        
         stage("Run Test") {
             steps {
-                    
+                timeout(time: 10, unit: 'MINUTES') {
+
                     unstash 'npm-cache'
-                    bat "npm run test -- --port 3002 --verbose"
+                    bat "npm run test -- --port 3002 --watch"
+                    }
                 }
         }
         stage('Publish to Nexus') {
