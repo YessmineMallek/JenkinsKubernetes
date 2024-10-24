@@ -3,23 +3,15 @@
   "description": "Nodeapp for CICD test",
   "version": "0.0.1",
   "dependencies": {
-    "buffer": "^6.0.3",
-    "express": "^4.21.1",
-    "path-browserify": "^1.0.1",
-    "querystring-es3": "^0.2.1",
-    "stream-browserify": "^3.0.0",
-    "stream-http": "^3.2.0",
-    "url": "^0.11.4",
-    "util": "^0.12.5"
+    "express": "^4.21.1"
   },
-  "devDependencies": {
-    "mocha": "*",
-    "sonar-scanner": "^3.1.0",
-    "supertest": "6.1.6"
-  },
+ 
   "scripts": {
     "start": "node index.js",
     "test": "mocha -w ./test/test.js",
-    "sonar": "sonar-scanner"
+    "sonar": "sonar-scanner",
+    "check-vulns": "dependency-check package.json --format HTML --out dependency-check-report.html "
+
+    
   }
 }

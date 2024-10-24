@@ -58,12 +58,19 @@ pipeline{
             }
         }
         
-        stage("Run Test") {
-            steps {
-                    bat "npm install nodemon --save-dev"
-                    bat "npm install mocha --save-dev"
-                    bat "npm run test -- --port 3002 --watch"
-                    
+        stage('OWASP Dependency-Check') {
+                steps {
+                dependencyCheck additionalArguments: '--format HTML --out ./dependency-check-report.html --scan ./',
+                                odcInstallation: 'Dependency-Check', // Name of the installation on Jenkins
+                                scanPath: './'
+                }
+        }
+        stage('Post: Analyze Results') {
+                steps {
+                    // Archive the report
+                    archiveArtifacts artifacts: 'dependency-check-report.html', allowEmptyArchive: true
+                    // Optionally fail the build if there are vulnerabilities
+                    dependencyCheckPublisher pattern: 'dependency-check-report.xml'
                 }
         }
         stage('Publish to Nexus') {
