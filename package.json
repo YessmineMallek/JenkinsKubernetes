@@ -2,11 +2,13 @@
   "name": "node-app",
   "description": "Nodeapp for CICD test",
   "version": "0.0.1",
+  "type": "module",
   "dependencies": {
     "buffer": "^6.0.3",
     "express": "^4.21.1",
     "http": "^0.0.1-security",
     "mocha": "^10.7.3",
+    "node-fetch": "^3.3.2",
     "path-browserify": "^1.0.1",
     "stream-browserify": "^3.0.0",
     "supertest": "^7.0.0",
@@ -18,7 +20,7 @@
     "test": "mocha ./test/test.js",
     "sonar": "sonar-scanner",
     "check-vulns": "dependency-check package.json --format HTML --out dependency-check-report.html ",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.cjs"
   },
   "devDependencies": {
     "@babel/core": "^7.25.9",
