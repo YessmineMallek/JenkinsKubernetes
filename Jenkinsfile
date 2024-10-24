@@ -36,12 +36,16 @@ pipeline{
                   withCredentials([file(credentialsId: 'nexussFileTokens', variable: 'mynpmrc')]) {
                     bat 'copy .npmrc %USERPROFILE%\\.npmrc'  
                     bat 'npm install'                       
-
-                }
-                
+                }    
             }
         }
-       
+       stage("Build") {
+            steps {
+                  bat "npm install webpack webpack-cli --save-dev"
+                  bat "npm run build"                    
+                }    
+            }
+        }
         stage('SonarQube Analysis') {
             steps {
                 script {
