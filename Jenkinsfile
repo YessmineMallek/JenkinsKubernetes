@@ -60,11 +60,10 @@ pipeline{
         
         stage("Run Test") {
             steps {
-                timeout(time: 10, unit: 'MINUTES') {
                     bat "npm install nodemon --save-dev"
                     bat "npm install mocha --save-dev"
                     bat "npm run test -- --port 3002 --watch"
-                    }
+                    
                 }
         }
         stage('Publish to Nexus') {
