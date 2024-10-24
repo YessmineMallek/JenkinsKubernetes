@@ -58,21 +58,18 @@ pipeline{
             }
         }
         
-        stage('OWASP Dependency-Check') {
-                steps {
-                dependencyCheck additionalArguments: '--format HTML --out ./dependency-check-report.html --scan ./',
-                                odcInstallation: 'Dependency-Check', // Name of the installation on Jenkins
-                                scanPath: './'
-                }
+       stage('OWASP Dependency-Check Vulnerabilities') {
+            steps {
+                dependencyCheck additionalArguments: ''' 
+                            -o './'
+                            -s './'
+                            -f 'ALL' 
+                            --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+                
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
         }
-        stage('Post: Analyze Results') {
-                steps {
-                    // Archive the report
-                    archiveArtifacts artifacts: 'dependency-check-report.html', allowEmptyArchive: true
-                    // Optionally fail the build if there are vulnerabilities
-                    dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-                }
-        }
+        
         stage('Publish to Nexus') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexusCredentials', 
