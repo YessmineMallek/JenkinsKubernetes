@@ -45,7 +45,7 @@ pipeline{
                   bat "npm run build"                    
                 }    
             }
-        }
+        
         stage('SonarQube Analysis') {
             steps {
                 script {
