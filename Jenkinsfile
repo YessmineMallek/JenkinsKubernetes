@@ -44,7 +44,7 @@ pipeline{
         
         stage("run test") {
             steps {
-                    bat "npx mocha" 
+                    bat "npx mocha -- --port 3002" 
                 }
         } 
         stage('SonarQube Analysis') {
