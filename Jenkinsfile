@@ -60,7 +60,7 @@ pipeline{
         
       stage('OWASP Dependency-Check Vulnerabilities') {
         steps {
-            bat "dependencyCheck additionalArguments: '--scan package.json --nvdApiKey 3a27b9a5-e7d0-4e1c-8c4e-e3c3b31599c9', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'"
+            dependencyCheck additionalArguments: '--scan package.json --nvdApiKey 3a27b9a5-e7d0-4e1c-8c4e-e3c3b31599c9', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
             dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
         }
     }
