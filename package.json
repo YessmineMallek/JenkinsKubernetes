@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "mocha ./test/test.js",
+    "test": "mocha -w ./test/test.js",
     "sonar": "sonar-scanner"
   }
 }
