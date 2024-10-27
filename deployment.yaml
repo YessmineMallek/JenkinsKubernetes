@@ -18,7 +18,7 @@ spec:
       - name: nodeserver
         image: yessminemallek/nodeapp:latest
         ports:
-        - containerPort: 3000 #Our docker image is exposed on 3000
+        - containerPort: 3001 #Our docker image is exposed on 3000
         
       
      
