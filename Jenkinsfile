@@ -11,6 +11,7 @@ pipeline{
         ARTIFACT_NAME = 'your-app-name' 
         VERSION = '1.0.${BUILD_NUMBER}'
         TEST_PORT=3002 
+        TRIVY_HOST  ='D:/trivy_0.45.1_windows-64bit'
     }
    
     
@@ -88,7 +89,7 @@ pipeline{
         stage("Trivy") {
             steps {
                   bat "trivy --version"
-                  bat "trivy image ${dockerimagename}"                    
+                  bat "${TRIVY_HOST} image ${dockerimagename}"                    
                 }    
         }
         
@@ -126,18 +127,15 @@ pipeline{
      post {
         success {
             echo "Build and deployment succeeded!"
-            // Additional actions for successful builds, e.g., notifications
         }
         
         failure {
             echo "Build or deployment failed."
-            // Additional actions for failed builds, e.g., sending alerts
         }
         
         always {
             echo "Cleaning up resources..."
-            deleteDir() // Clean workspace after every build
-            // Other cleanup actions, such as deleting Docker images
+            deleteDir() 
         }
     }
 }
