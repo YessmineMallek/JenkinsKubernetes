@@ -87,6 +87,7 @@ pipeline{
         }
         stage("Trivy") {
             steps {
+                  bat "trivy --version"
                   bat "trivy image ${dockerimagename}"                    
                 }    
         }
