@@ -121,8 +121,23 @@ pipeline{
                 }
             }
         }
+    }
+    
+     post {
+        success {
+            echo "Build and deployment succeeded!"
+            // Additional actions for successful builds, e.g., notifications
+        }
         
+        failure {
+            echo "Build or deployment failed."
+            // Additional actions for failed builds, e.g., sending alerts
+        }
         
-        
+        always {
+            echo "Cleaning up resources..."
+            deleteDir() // Clean workspace after every build
+            // Other cleanup actions, such as deleting Docker images
+        }
     }
 }
