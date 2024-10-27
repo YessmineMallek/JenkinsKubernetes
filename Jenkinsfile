@@ -39,12 +39,6 @@ pipeline{
                 }    
             }
         }
-       stage("Build") {
-            steps {
-                  bat "npm install webpack webpack-cli --save-dev"
-                  bat "npm run build"                    
-                }    
-            }
         
         stage('SonarQube Analysis') {
             steps {
@@ -57,11 +51,39 @@ pipeline{
                 }
             }
         }
+             
+       stage("Build") {
+            steps {
+                  bat "npm install webpack webpack-cli --save-dev"
+                  bat "npm run build"                    
+                }    
+        }
         
-   
-
+        stage('OWASP Dependency-Check Vulnerabilities') {
+            steps {
+                dependencyCheck additionalArguments: '--scan package.json --nvdApiKey 3a27b9a5-e7d0-4e1c-8c4e-e3c3b31599c9', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
+        
+        
+        stage('Build image'){
+            steps{
+                script{
+                    dockerImage = docker.build(dockerimagename)
+                }
+            }
+        } 
+        
         
         stage('Publish to Nexus') {
+            
+            dir('C:/Program Files (x86)/nexus-3.73.0-12/bin') {
+                script {
+                     // Execute nexus.exe
+                    bat 'nexus.exe /run'
+                }
+            }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexusCredentials', 
                                                  usernameVariable: 'NEXUS_USERNAME', 
@@ -77,21 +99,9 @@ pipeline{
                     bat 'del .npmrc'
                 }
                 }
-            }
-        
-        stage('OWASP Dependency-Check Vulnerabilities') {
-            steps {
-                dependencyCheck additionalArguments: '--scan package.json --nvdApiKey 3a27b9a5-e7d0-4e1c-8c4e-e3c3b31599c9', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
         }
-        stage('Build image'){
-            steps{
-                script{
-                    dockerImage = docker.build(dockerimagename)
-                }
-            }
-        }  
+        
+         
         stage('Publish Image to docker hub'){
             environment{
                 registryCredential='dockerhublogin'
