@@ -88,8 +88,8 @@ pipeline{
         }
         stage("Trivy") {
             steps {
-                  bat "${TRIVY_HOST} --version"
-                  bat "${TRIVY_HOST} image ${dockerimagename} > scan.txt"                    
+                  bat "${TRIVY_HOST}/trivy.exe --version"
+                  bat "${TRIVY_HOST}/trivy.exe image ${dockerimagename} > scan.txt"                    
                 }    
         }
         
