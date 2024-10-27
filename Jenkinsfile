@@ -67,14 +67,6 @@ pipeline{
         }
         
         
-        stage('Build image'){
-            steps{
-                script{
-                    dockerImage = docker.build(dockerimagename)
-                }
-            }
-        } 
-        
         
         stage('Publish to Nexus') {
             steps {
@@ -94,7 +86,14 @@ pipeline{
                 }
         }
         
-         
+        stage('Build Docker image'){
+            steps{
+                script{
+                    dockerImage = docker.build(dockerimagename)
+                }
+            }
+        } 
+        
         stage('Publish Image to docker hub'){
             environment{
                 registryCredential='dockerhublogin'
