@@ -110,7 +110,7 @@ pipeline{
         stage('K8S Deploy to Aks Cluster') {
             steps {
                 script {
-                    kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes",enableConfigSubstitution: true)
+                    kubernetesDeploy(configs: "deploymentservice.yaml", kubeconfigId: "kubernetes",enableConfigSubstitution: true)
                 }
             }
         }
