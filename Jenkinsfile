@@ -58,12 +58,7 @@ pipeline{
             }
         }
         
-      stage('OWASP Dependency-Check Vulnerabilities') {
-        steps {
-            dependencyCheck additionalArguments: '--scan package.json --nvdApiKey 3a27b9a5-e7d0-4e1c-8c4e-e3c3b31599c9', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
-            dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-        }
-    }
+   
 
         
         stage('Publish to Nexus') {
@@ -84,7 +79,12 @@ pipeline{
                 }
             }
         
-        
+        stage('OWASP Dependency-Check Vulnerabilities') {
+            steps {
+                dependencyCheck additionalArguments: '--scan package.json --nvdApiKey 3a27b9a5-e7d0-4e1c-8c4e-e3c3b31599c9', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
         stage('Build image'){
             steps{
                 script{
@@ -105,10 +105,10 @@ pipeline{
             } 
         }
        
-        stage('Deploying App to Kubernetes') {
+        stage('K8S Deploy') {
             steps {
                 script {
-                    kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes")
+                    kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes",enableConfigSubstitution: true)
                 }
             }
         }
