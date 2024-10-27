@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodeapp-deployment
+  namespace: myJsCluster
   labels:
     app: nodeapp
 spec:
@@ -27,6 +28,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nodeapp-service
+  namespace: myJsCluster
+
 spec:
   selector:
     app: nodeapp 

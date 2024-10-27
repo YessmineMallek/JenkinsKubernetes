@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment 
 metadata: 
   name: nodeapp-deployment
+  namespace: myJsCluster
   labels: 
     app: nodeapp #the deployement will have this name
 spec: 
