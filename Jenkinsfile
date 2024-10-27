@@ -110,6 +110,7 @@ pipeline{
         stage('K8S Deploy to Aks Cluster') {
             steps {
                 script {
+                   bat "kubectl delete deployments --all --namespace=myJsCluster"
                     kubernetesDeploy(configs: "deploymentservice.yaml", kubeconfigId: "kubernetes",enableConfigSubstitution: true)
                 }
             }
