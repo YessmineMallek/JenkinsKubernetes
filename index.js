@@ -3,7 +3,7 @@ import express from 'express';
 var app = express();
 
 app.get('/', function (req, res) {
-    res.send('{ "response": "Hello From Thetips4you" }');
+    res.send('{ "response": "Hello From DevSecOps" }');
 });
 
 app.get('/will', function (req, res) {

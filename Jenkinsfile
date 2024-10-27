@@ -2,7 +2,7 @@ pipeline{
     agent any
     tools {nodejs "NODEJS14" }
     environment{
-        dockerimagename="yessminemallek/nodeapp"
+        dockerimagename="yessminemallek/nodeapp:latest"
         dockerImage=""
         //Nexus    
         NEXUS_URL = 'localhost:8081' 
@@ -85,6 +85,12 @@ pipeline{
                 }
                 }
         }
+        stage("Trivy") {
+            steps {
+                  bat "trivy image ${dockerimagename}"                    
+                }    
+        }
+        
         
         stage('Build Docker image'){
             steps{
