@@ -89,7 +89,7 @@ pipeline{
         stage("Trivy") {
             steps {
                   bat "trivy --version"
-                  bat "${TRIVY_HOST} image ${dockerimagename}"                    
+                  bat "${TRIVY_HOST} image ${dockerimagename} > scan.txt"                    
                 }    
         }
         
@@ -134,7 +134,14 @@ pipeline{
         }
         
         always {
-            echo "Cleaning up resources..."
+            echo 'Sending email notification'
+            bat 'cat scan.txt'
+			    
+                emailext attachmentsPattern: 'scan.txt',
+                to: 'yasmine.mallek@ensi-uma.tn',
+				from: "Jenkins",
+				body: 'Here is the Scan report for Trivy',
+                subject: "Trivy Scan Report"
             deleteDir() 
         }
     }
