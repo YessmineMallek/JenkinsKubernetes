@@ -13,4 +13,5 @@ app.get('/ready', function (req, res) {
     res.send('{ "response": " Great!, It works!" }');
 });
 app.listen(process.env.PORT || 3001);
-module.exports = app;
+
+export default app;
