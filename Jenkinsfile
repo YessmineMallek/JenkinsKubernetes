@@ -86,13 +86,7 @@ pipeline{
                 }
                 }
         }
-        stage("Trivy") {
-            steps {
-                  bat "${TRIVY_HOST}/trivy.exe --version"
-                  bat "${TRIVY_HOST}/trivy.exe image ${dockerimagename} > scan.txt"                    
-                }    
-        }
-        
+   
         
         stage('Build Docker image'){
             steps{
@@ -102,6 +96,13 @@ pipeline{
             }
         } 
         
+        
+        stage("Trivy") {
+            steps {
+                  bat "${TRIVY_HOST}/trivy.exe --version"
+                  bat "${TRIVY_HOST}/trivy.exe image ${dockerimagename} > scan.txt"                    
+                }    
+        }
         stage('Publish Image to docker hub'){
             environment{
                 registryCredential='dockerhublogin'
