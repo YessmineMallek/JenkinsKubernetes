@@ -77,13 +77,6 @@ pipeline{
         
         
         stage('Publish to Nexus') {
-            
-            dir('C:/Program Files (x86)/nexus-3.73.0-12/bin') {
-                script {
-                     // Execute nexus.exe
-                    bat 'nexus.exe /run'
-                }
-            }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexusCredentials', 
                                                  usernameVariable: 'NEXUS_USERNAME', 
