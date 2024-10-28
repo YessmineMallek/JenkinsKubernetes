@@ -14,6 +14,8 @@ spec:
       labels:
         app: nodeapp 
     spec:
+      seserviceAccountName: nodeapp
+      automountServiceAccountToken: false 
       containers:
       - name: nodeserver
         resources:
