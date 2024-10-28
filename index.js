@@ -1,6 +1,6 @@
 import express from 'express';
 
-var app = express();
+const app = express();
 
 app.get('/', function (req, res) {
     res.send('{ "response": "Hello From DevSecOps" }');
