@@ -14,9 +14,15 @@ spec:
       labels:
         app: nodeapp
     spec:
+      serviceAccountName: nodeapp
+      automountServiceAccountToken: false  
       containers:
       - name: nodeserver
         image: yessminemallek/nodeapp:latest
+        resources:
+          limits:
+            memory: "512Mi"  
+            cpu: "500m"       
         ports:
         - containerPort: 3001 #Our docker image is exposed on 3000
         
