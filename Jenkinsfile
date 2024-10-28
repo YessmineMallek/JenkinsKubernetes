@@ -139,7 +139,7 @@ pipeline{
             bat 'cat scan.txt'
 			    
                 emailext attachmentsPattern: 'scan.txt',
-                to: 'yasmine.mallek@ensi-uma.tn',
+                to: 'mallek.yessmin@gmail.com',
 				from: "Jenkins",
 				body: 'Here is the Scan report for Trivy',
                 subject: "Trivy Scan Report"
