@@ -125,7 +125,7 @@ pipeline{
         }
     }
     
-     post {
+    post {
         success {
             echo "Build and deployment succeeded!"
         }
@@ -135,14 +135,23 @@ pipeline{
         }
         
         always {
-            echo 'Sending email notification'
-            bat 'cat scan.txt'
-			    
-                emailext attachmentsPattern: 'scan.txt',
+            emailext(
+                subject: "Pipline status: ${BUILD_NUMBER}",
+                body:'''
+                <html>
+                    <body>
+                        <p> Build status : ${BUILD_STATUS} </p>
+                        <p> Build Number : ${BUILD_NUMBER} </p>
+                        <p> Check the <a href="${BUILD_URL}"> console output </a>.</p>
+
+                    </body>
+                </html>
+                ''',
                 to: 'mallek.yessmin@gmail.com',
-				from: "Jenkins",
-				body: 'Here is the Scan report for Trivy',
-                subject: "Trivy Scan Report"
+                from: 'mallek.yessmin@gmail.com',
+                replyTo : 'mallek.yessmin@gmail.com',
+                mimeType : 'text/html' 
+            )
             deleteDir() 
         }
     }
