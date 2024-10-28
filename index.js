@@ -1,6 +1,8 @@
 import express from 'express';
 
 const app = express();
+// Disable 'X-Powered-By' header to prevent version disclosure
+app.disable('x-powered-by');
 
 app.get('/', function (req, res) {
     res.send('{ "response": "Hello From DevSecOps" }');
