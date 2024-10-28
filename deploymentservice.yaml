@@ -16,6 +16,10 @@ spec:
     spec:
       containers:
       - name: nodeserver
+        resources:
+          limits:
+            memory: "512Mi"  
+            cpu: "500m"
         image: yessminemallek/nodeapp:latest
         ports:
         - containerPort: 3001
